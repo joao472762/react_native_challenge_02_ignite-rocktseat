@@ -1,4 +1,4 @@
-export const defaultTheme = {
+export const defaultTheme = <const> {
     colors: {
         red: {
             500: '#BF3B44',
@@ -42,4 +42,4 @@ export const defaultTheme = {
             '2xl': 32,
         }
     }
-} as const
+} 
