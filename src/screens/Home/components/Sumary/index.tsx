@@ -6,9 +6,10 @@ import { useTheme } from "styled-components/native";
 import { SumaryContainer, SumaryContent, SumaryStyledProps, Icon} from "./styles";
 
 interface SumaryProps {
-    isPossive: SumaryStyledProps
+    isPossive: SumaryStyledProps,
+    percentage: string
 }
-export function Sumary({isPossive}: SumaryProps){ 
+export function Sumary({isPossive,percentage}: SumaryProps){ 
     const {colors} = useTheme()
     return (
         <SumaryContainer isPositive={isPossive}>
@@ -20,7 +21,7 @@ export function Sumary({isPossive}: SumaryProps){
             />
             
             <SumaryContent>
-                <Heading size="2xl">90.86%</Heading>
+                <Heading size="2xl">{percentage}%</Heading>
                 <Text>
                     das refeições dentro da dieta
                 </Text>

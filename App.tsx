@@ -2,6 +2,7 @@ import { ThemeProvider } from 'styled-components/native';
 import {useFonts,NunitoSans_400Regular, NunitoSans_700Bold} from '@expo-google-fonts/nunito-sans'
 
 import { Home } from '@screens/Home';
+import {Statistics} from '@screens/Statistics'
 import { AppContainer } from '@styles/app';
 import { Loader } from '@components/Loader';
 import { defaultTheme } from '@styles/defaultTheme';
@@ -21,7 +22,7 @@ export default function App() {
           barStyle={'dark-content'}
           backgroundColor= 'transparent'
         />
-        {fontLodaded ? <Home/> :<Loader/>}
+        {fontLodaded ? <Statistics/> :<Loader/>}
       </AppContainer>
 
     </ThemeProvider>

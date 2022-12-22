@@ -1,5 +1,7 @@
-import { Text } from '@components/Text';
 import {TouchableOpacityProps} from 'react-native'
+import { Text } from '@components/Text';
+
+
 import { CardContainer, CardStyledProps, DietIdicator, Title } from './styles';
 
 

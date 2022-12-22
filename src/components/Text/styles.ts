@@ -8,6 +8,7 @@ export type textStyledProps = {
 
 export const TextContent =  styled.Text<textStyledProps>`
     ${({size,theme,weight,type}) => css`
+        text-align: center;
         font-size:  ${theme.fonts.size[size]}px;
         color: ${type === 'primary' ? theme.colors.gray[800] : theme.colors.gray[900]};
         font-family: ${ 
