@@ -17,6 +17,7 @@ export const defaultTheme = <const> {
             800: '#333638',
             700: '#5C6265',
             500: '#B9BBBC',
+            400: '#D9D9D9',
             300: '#DDDEDF',
             200: '#EFF0F0',
             100: '#FAFAFA'
