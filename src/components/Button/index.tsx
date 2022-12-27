@@ -1,20 +1,21 @@
 import { ReactNode } from "react";
 import { TouchableOpacityProps } from "react-native"
 
-import {Title, ButtonContent} from './styles'
+import {Title, ButtonContent, ButtonStyledProps} from './styles'
 
 interface ButtonRootProps extends TouchableOpacityProps{
     title: string,
-    Icon?: ReactNode
+    Icon?: ReactNode,
+    type?: ButtonStyledProps
 
 }
 
-export function Button({title,Icon, ...rest }: ButtonRootProps){
+export function Button({title,Icon, type='primary', ...rest }: ButtonRootProps){
    
     return (
-        <ButtonContent  {...rest}>
+        <ButtonContent type={type}  {...rest}>
                 {Icon}      
-            <Title>
+            <Title type={type}>
                 {title}
             </Title>
         </ButtonContent>

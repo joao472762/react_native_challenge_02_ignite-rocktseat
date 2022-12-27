@@ -9,9 +9,6 @@ import { Input } from "@components/Form/Input";
 import { DateInput } from "@components/Form/DateInput";
 
 import { 
-    Icon, 
-    Title,
-    Header,
     DateFitelds,
     NewMealContainer, 
     NewMealForm,
@@ -21,6 +18,7 @@ import {
 } from "./styles";
 import { Text } from "@components/Text";
 import { CardSelector } from "./components/CardSelector";
+import { Header } from "@components/Header";
 
 const newMealFormSchema = z.object({
     name: z.string().min(1,'nome não pode ficar vazio'),
@@ -53,12 +51,9 @@ export function NewMeal(){
     }
     return  (
         <NewMealContainer>
-            <Header>
-                <TouchableOpacity>
-                    <Icon/>
-                </TouchableOpacity>
-                <Title size="lg">Nova refeição</Title>
-            </Header>
+            <Header
+                title="Nova refeição"
+            />
             <NewMealForm>
 
                 <Input

@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components/native";
 
-export type HeadingStyledProps  = 'lg' | 'xl' | '2xl'
+export type HeadingStyledProps  = 'lg' |'2lg' | 'xl' | '2xl'
 
 interface headingProps {
     size: HeadingStyledProps

@@ -6,7 +6,7 @@ import styled, { css } from "styled-components/native";
 
 export const NewMealContainer = styled.View`
     flex: 1;
-    background-color: ${({theme:{colors}}) => colors.gray[200]};
+    background-color: ${({theme:{colors}}) => colors.gray[300]};
 `
 
 export const NewMealForm = styled.View`

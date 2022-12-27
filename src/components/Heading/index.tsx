@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 import { TextProps } from "react-native";
 
-import { HeadingContainer } from "./styles";
+import { HeadingContainer, HeadingStyledProps } from "./styles";
 
 interface HeadingProps  extends TextProps {
-    size?: 'lg' | 'xl' | '2xl',
+    size?: HeadingStyledProps
     children: ReactNode
 }
 
