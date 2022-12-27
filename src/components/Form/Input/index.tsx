@@ -22,17 +22,24 @@ export function Input({control,name,label,error,style,type='primary',...rest}: I
         }}
         render={({ field: { onChange, onBlur, value } }) => (
             <InputComponent.Root style={{
-                width: type === 'primary' ? '100%' : '48%',
+                
                 marginTop:24
             }}>
 
                 {label && <InputComponent.Label title={label}/>}
                
                 <InputComponent.Input
-                    {...rest}
                     onBlur={onBlur}
+                    style={[
+                        type === 'secundary' && {
+                            height:120,
+                    
+                        }
+                    ]}
+                    textAlignVertical='top'
                     onChangeText={onChange}
                     value={value}
+                    {...rest}
                 />
                 {error && <InputComponent.Error error={error}  />}
             </InputComponent.Root>

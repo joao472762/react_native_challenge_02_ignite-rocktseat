@@ -8,6 +8,7 @@ import { Loader } from '@components/Loader';
 import { defaultTheme } from '@styles/defaultTheme';
 import { StatusBar } from 'react-native';
 import { NewMeal } from '@screens/NewMeal';
+import { Farewell } from '@screens/Farewell';
 
 export default function App() {
   const [fontLodaded] =  useFonts({
@@ -23,7 +24,7 @@ export default function App() {
           barStyle={'dark-content'}
           backgroundColor= 'transparent'
         />
-        {fontLodaded ? <NewMeal/> :<Loader/>}
+        {fontLodaded ? <Farewell/> :<Loader/>}
       </AppContainer>
 
     </ThemeProvider>

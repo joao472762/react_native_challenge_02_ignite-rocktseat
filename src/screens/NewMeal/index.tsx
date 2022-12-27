@@ -70,35 +70,38 @@ export function NewMeal(){
                 />
 
                 <Input
+                    type="secundary"
                     label="Descrição"
                     error={errors.description && errors.description.message}
                     control={control}
                     name="description"
                     placeholder="Descrição"
                 />
-
+ 
 
                 <DateFitelds>
                     <DateInput
-                        type="datetime"
+                        name="date"
+                        label="Data"
                         control={control}
+                        placeholder= '01/01/2000'
+                        error={errors.date && errors.date.message}
+                        type="datetime"
                         options={{
                             format: 'DD/MM/YYYY'
                         }}
-                        error={errors.date && errors.date.message}
-                        name="date"
-                        label="Data"
 
                     />
                     <DateInput
-                        type="datetime"
-                        control={control}
+                        name="hours"
                         label="Hora"
+                        control={control}
+                        placeholder= '18:00'
+                        error={errors.hours  && errors.hours.message}
+                        type="datetime"
                         options={{
                             format: 'HH:mm'
                         }}
-                        error={errors.hours  && errors.hours.message}
-                        name="hours"
                       />  
                 
                 </DateFitelds>

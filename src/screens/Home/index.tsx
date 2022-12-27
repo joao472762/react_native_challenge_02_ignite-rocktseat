@@ -29,7 +29,7 @@ export function Home(){
                 <Avatar source={{uri:'https://github.com/joao472762.png'}}/>
             </Header>
 
-            <Sumary isPossive/>
+            <Sumary isPossive percentage="80"/>
 
             <CreateNewMeal>
                 <Text style={{marginBottom: 8}}>Refeições</Text>

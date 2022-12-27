@@ -10,7 +10,7 @@ export const ButtonContent = styled.TouchableOpacity`
     justify-content: center;
     flex-direction: row;
     width: 100%;
-    padding: 16px 24px;
+    padding: 16px 0px;
     border-radius: 6px;
     background-color: ${({theme:{colors}}) => colors.gray[800]};
 `
