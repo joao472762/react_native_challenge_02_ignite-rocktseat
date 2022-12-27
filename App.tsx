@@ -1,15 +1,12 @@
 import { ThemeProvider } from 'styled-components/native';
 import {useFonts,NunitoSans_400Regular, NunitoSans_700Bold} from '@expo-google-fonts/nunito-sans'
 
-import { Home } from '@screens/Home';
-import {Statistics} from '@screens/Statistics'
+
 import { AppContainer } from '@styles/app';
 import { Loader } from '@components/Loader';
 import { defaultTheme } from '@styles/defaultTheme';
 import { StatusBar } from 'react-native';
-import { NewMeal } from '@screens/NewMeal';
-import { Farewell } from '@screens/Farewell';
-import { Meal } from '@screens/Meal';
+import { Router } from '@routes/index';
 
 export default function App() {
   const [fontLodaded] =  useFonts({
@@ -25,7 +22,7 @@ export default function App() {
           barStyle={'dark-content'}
           backgroundColor= 'transparent'
         />
-        {fontLodaded ? <NewMeal/> :<Loader/>}
+        {fontLodaded ? <Router/> :<Loader/>}
       </AppContainer>
 
     </ThemeProvider>
