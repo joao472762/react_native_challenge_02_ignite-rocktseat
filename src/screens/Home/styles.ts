@@ -1,6 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 import { Plus } from "phosphor-react-native";
+import { Text } from "@components/Text";
 
 export const HomeContainer  = styled(SafeAreaView)`
     flex: 1;
@@ -18,6 +19,11 @@ export const Header = styled.View`
 
 export const CreateNewMeal = styled.View`
     margin-top: 40px ;
+`
+
+export const Label = styled(Text)`
+    margin-bottom: 14px;
+    text-align: left;
 `
 
 export const Icon = styled(Plus).attrs(({theme}) => ({

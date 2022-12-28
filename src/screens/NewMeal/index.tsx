@@ -1,11 +1,14 @@
 import {  z } from "zod";
 import { useState } from "react";
 import {  useForm } from "react-hook-form";
-import { TouchableOpacity } from "react-native";
 import {zodResolver} from '@hookform/resolvers/zod';
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
+import { Text } from "@components/Text";
 import { Button } from "@components/Button";
+import { Header } from "@components/Header";
 import { Input } from "@components/Form/Input";
+import { CardSelector } from "./components/CardSelector";
 import { DateInput } from "@components/Form/DateInput";
 
 import { 
@@ -16,9 +19,8 @@ import {
     DietSelector,
  
 } from "./styles";
-import { Text } from "@components/Text";
-import { CardSelector } from "./components/CardSelector";
-import { Header } from "@components/Header";
+
+import { ScreenProps } from "@routes/stack.routes";
 
 const newMealFormSchema = z.object({
     name: z.string().min(1,'nome não pode ficar vazio'),
@@ -33,7 +35,7 @@ const newMealFormSchema = z.object({
 export type newMealFormSchemaData = z.infer<typeof newMealFormSchema>
 export type newMealFormSchemaType = 'name' | 'description' | 'date' | 'hours' 
 
-export function NewMeal(){
+export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal'>){
     const [isInDiet, setIsInDiet] = useState<boolean | undefined>(undefined)
 
     const {control,handleSubmit,reset,formState:{errors}} = useForm<newMealFormSchemaData>({
@@ -43,8 +45,21 @@ export function NewMeal(){
     function createNewMeal(data:newMealFormSchemaData ){
         console.log(data)
         console.log(isInDiet)
+        navigateToFarewellScreen()
         reset()
     }
+
+    function navigateToFarewellScreen(){
+        if(typeof(isInDiet) === 'boolean'){
+            navigation.navigate('Farewell',{isInDiet: isInDiet })
+        }
+
+    }
+
+    function navigateToHomeScreen(){
+        navigation.navigate('Home')
+    }
+
 
     function handleChangeDietState(dietState: boolean){
         setIsInDiet(dietState)
@@ -52,6 +67,7 @@ export function NewMeal(){
     return  (
         <NewMealContainer>
             <Header
+                onNavigate={navigateToHomeScreen}
                 title="Nova refeição"
             />
             <NewMealForm>
@@ -123,14 +139,11 @@ export function NewMeal(){
 
                             type={'negative'}
                             isSelected={ isInDiet === false}
-                            title='sim'
+                            title='não'
                         />
 
                     </DietSelector>
                 </Footer>
-
-
-               
 
                 <Button
                     style={{marginTop: 'auto'}}

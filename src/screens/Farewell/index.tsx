@@ -1,11 +1,17 @@
 import { Text } from "@components/Text";
 import PositiveIlustration from '@assets/dietPositive.png'
 import NegativeIlustration from '@assets/neagativeDiet.png'
+import {NativeStackScreenProps} from '@react-navigation/native-stack'
 
 import {  Button, FarewellContainer, Ilustration, Title } from "./styles";
+import { ScreenProps } from "@routes/stack.routes";
 
-export function Farewell(){
-    const  isInDiet = false
+export function Farewell({navigation,route}:NativeStackScreenProps<ScreenProps,'Farewell'>){
+    const {isInDiet} = route.params
+
+    function handleNavigateToHome(){
+        navigation.navigate('Home')
+    }
 
     return  (
         <FarewellContainer>
@@ -29,8 +35,8 @@ export function Farewell(){
                 <>
                     <Text>
                         Você 
-                        <Text weight="Bold"> saiu da dieta</Text> 
-                        dessa vez, mas continue 
+                        <Text weight="Bold"> saiu da dieta </Text> 
+                         dessa vez, mas continue 
                         {'\n'} se esforçando e não desista!
                     </Text>
 
@@ -40,7 +46,10 @@ export function Farewell(){
             )}
 
 
-            <Button title="Ir para a página inicial"/>  
+            <Button
+                onPress={handleNavigateToHome} 
+                title="Ir para a página inicial"
+            />  
 
         </FarewellContainer>
     )

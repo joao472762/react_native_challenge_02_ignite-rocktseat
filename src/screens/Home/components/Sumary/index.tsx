@@ -1,18 +1,19 @@
 import { Heading } from "@components/Heading";
 import { Text } from "@components/Text";
 import {ArrowUpRight} from 'phosphor-react-native'
+import { TouchableOpacityProps } from "react-native";
 import { useTheme } from "styled-components/native";
 
 import { SumaryContainer, SumaryContent, SumaryStyledProps, Icon} from "./styles";
 
-interface SumaryProps {
+interface SumaryProps extends TouchableOpacityProps{
     isPossive: SumaryStyledProps,
     percentage: string
 }
-export function Sumary({isPossive,percentage}: SumaryProps){ 
+export function Sumary({isPossive,percentage, ...rest}: SumaryProps){ 
     const {colors} = useTheme()
     return (
-        <SumaryContainer isPositive={isPossive}>
+        <SumaryContainer isPositive={isPossive} {...rest}>
 
             <Icon
                 color={isPossive ? colors.green[500] : colors.red[500]}

@@ -5,7 +5,7 @@ import { Farewell } from "@screens/Farewell";
 import { Statistics } from "@screens/Statistics";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export type StackScreenProps = {
+export type ScreenProps = {
     Home: undefined,
     NewMeal: undefined,
     Statistics: undefined,
@@ -17,7 +17,7 @@ export type StackScreenProps = {
     }
 }
 
-const {Navigator,Screen}  = createNativeStackNavigator<StackScreenProps>()
+const {Navigator,Screen}  = createNativeStackNavigator<ScreenProps>()
 
 export function StackRoutes(){
     return (

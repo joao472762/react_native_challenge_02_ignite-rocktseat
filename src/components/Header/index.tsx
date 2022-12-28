@@ -6,10 +6,11 @@ export type HeaderType = 'default' | 'positive' | 'negative';
 
 interface HeaderProps {
     title: string;
-    type?: HeaderType
+    type?: HeaderType;
+    onNavigate?: () => void
 }
 
-export function Header({title, type='default'}: HeaderProps){
+export function Header({title, type='default', onNavigate}: HeaderProps){
     const {colors} = useTheme()
 
     const headerType = {
@@ -21,12 +22,20 @@ export function Header({title, type='default'}: HeaderProps){
     const color = headerType[type]
     
 
+    function handleNavigate(){
+        if(onNavigate){
+            onNavigate()
+        }
+
+    }
+    
     return (
+
         <HeaderContainer style={{backgroundColor:color}}>
-            <TouchableOpacity>
-                    <Icon/>
-                </TouchableOpacity>
-                <Title size="lg">{title}</Title>
+            <TouchableOpacity onPress={handleNavigate}>
+                <Icon/>
+            </TouchableOpacity>
+            <Title size="lg">{title}</Title>
         </HeaderContainer>
     )
 }

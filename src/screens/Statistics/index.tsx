@@ -1,14 +1,26 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
 import { Text } from "@components/Text";
 import { Card } from "./components/Card";
 import { Header } from "./components/Header";
 
+import { ScreenProps } from "@routes/stack.routes";
+
 import { Footer, StatisticsContainer, StatisticsContent} from "./styles";
 
 
-export function Statistics(){
+export function Statistics({navigation,route}:NativeStackScreenProps<ScreenProps, 'Statistics'>){
+    function handleNavigatToHomeScreen(){
+        navigation.navigate('Home')
+    }
+
     return (
         <StatisticsContainer>
-            <Header isPossive percentage='98'/>
+            <Header 
+                isPossive 
+                percentage='98'
+                onNavigate={handleNavigatToHomeScreen} 
+            />
 
             <StatisticsContent>
                 <Text weight="Bold" style={{marginBottom: 12}}>Estatísticas gerais</Text>

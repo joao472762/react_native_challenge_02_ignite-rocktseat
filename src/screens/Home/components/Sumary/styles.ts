@@ -9,7 +9,7 @@ interface  SumaryProps {
     isPositive: SumaryStyledProps
 }
 
-export const SumaryContainer = styled.View<SumaryProps>`
+export const SumaryContainer = styled.TouchableOpacity<SumaryProps>`
     padding: 13px 13px 20px 13px;
     text-align: center;
     border-radius: 8px;

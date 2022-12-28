@@ -10,13 +10,20 @@ import { HeaderContainer, HeaderContent, HeaderStyledProps, Icon} from "./styles
 interface HeaderProps {
     isPossive: HeaderStyledProps,
     percentage: string,
-
+    onNavigate: () => void
 }
-export function Header({isPossive,percentage}: HeaderProps){ 
+
+export function Header({isPossive,percentage, onNavigate}: HeaderProps){ 
     const {colors} = useTheme()
+
+    function handleNavigate(){
+        onNavigate()
+    }
     return (
         <HeaderContainer isPositive={isPossive}>
-            <TouchableOpacity>
+            <TouchableOpacity 
+                onPress={handleNavigate}
+            >
                 <Icon
                     color={isPossive ? colors.green[500] : colors.red[500]}
                     size={30}

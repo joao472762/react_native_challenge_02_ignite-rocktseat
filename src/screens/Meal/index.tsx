@@ -1,5 +1,6 @@
 import { useTheme } from "styled-components/native";
 import { PencilSimpleLine,Trash } from "phosphor-react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 
 import { Text } from "@components/Text";
@@ -9,16 +10,27 @@ import { Header,HeaderType } from "@components/Header";
 
 import { MealContainer,MealContent,DietStatus,DietIndicator,Footer} from "./styles";
 
-export function Meal() {
+import { ScreenProps } from "@routes/stack.routes";
+
+export function Meal({navigation,route}:NativeStackScreenProps<ScreenProps,'Meal'>) {
     const  isInDiet = true;
+    const {id} = route.params
 
     const headerType: HeaderType = isInDiet ? 'positive' : 'negative'
     const {colors} = useTheme()
 
+    function navigateToHomeScreen(){
+        navigation.navigate('Home')
+    }
+
 
     return (
         <MealContainer isInDiet={isInDiet}>
-            <Header title="Refeição" type={headerType}/>
+            <Header 
+                title="Refeição" 
+                type={headerType} 
+                onNavigate={navigateToHomeScreen}
+            />
             <MealContent>
                 <Heading  size="2lg">Sanduíche</Heading>
                 <Text type="secundary" style={{textAlign: 'left',marginTop:4}}>Sanduíche de pão integral com atum e salada de alface e tomate</Text>
