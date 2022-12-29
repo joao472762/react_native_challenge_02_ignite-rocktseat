@@ -4,7 +4,7 @@ interface MealsProvierProps  {
     children: ReactNode
 }
 
-interface Meal {
+export interface MealProps {
     id: string,
     date: Date;
     name: string;
@@ -13,16 +13,21 @@ interface Meal {
 }
 
 interface MealsContextType {
-    meals: Meal[]
+    meals: MealProps[]
+    addNewMeal: (newMeal: MealProps) => void
 }
 
 export const MealsContext = createContext({} as MealsContextType)
 
 export function MealsProvier({children}: MealsProvierProps) {
-    const [meals, setMeals]  = useState<Meal[]>([])
+    const [meals, setMeals]  = useState<MealProps[]>([])
+
+    function addNewMeal(newMeal: MealProps ){
+         setMeals(state => [newMeal, ...meals])
+    }
 
     return (
-        <MealsContext.Provider value={{meals}}>
+        <MealsContext.Provider value={{meals,addNewMeal}}>
             {children}
         </MealsContext.Provider>
     )

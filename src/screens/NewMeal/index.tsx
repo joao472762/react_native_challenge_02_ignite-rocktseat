@@ -25,6 +25,8 @@ import {
 import { ScreenProps } from "@routes/stack.routes";
 import { dateRegex } from "@utils/regex/date";
 import { timeRegex } from "@utils/regex/time";
+import { useMeals } from "@hooks/useMeals";
+import { MealProps } from "@context/MealsContext";
 
 const newMealFormSchema = z.object({
     name: z.string().min(1,'nome não pode ficar vazio'),
@@ -36,20 +38,13 @@ const newMealFormSchema = z.object({
     time: z.string().regex(timeRegex,'horário incorreto')
 })
 
-interface Meal {
-    id: string,
-    date: Date;
-    name: string;
-    description: string;
-    isInDiet: boolean;
-}
 
 export type newMealFormSchemaData = z.infer<typeof newMealFormSchema>
 export type newMealFormSchemaType = 'name' | 'description' | 'date' | 'time' 
 
 export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal'>){
     const [isInDiet, setIsInDiet] = useState<boolean | undefined>(undefined)
-    const [meals, setMeals] = useState<Meal[]>([])
+    const {addNewMeal} = useMeals()
 
     const {control,handleSubmit,reset,formState:{errors}} = useForm<newMealFormSchemaData>({
         resolver: zodResolver(newMealFormSchema)
@@ -78,7 +73,7 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
 
         const dateFormatd  = new Date(year,mounth,day,hours, minutes)
 
-        const newMeal:Meal = {
+        const newMeal:MealProps = {
             id:uuid.v4() as string,
             name,
             description,
@@ -86,7 +81,7 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
             isInDiet: isInDiet as boolean,
         }
 
-        setMeals((state) => [newMeal,...state])
+        addNewMeal(newMeal)
         
         reset()
         navigateToFarewellScreen()

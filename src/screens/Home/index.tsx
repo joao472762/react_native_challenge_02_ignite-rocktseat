@@ -14,6 +14,7 @@ import { ScreenProps } from "@routes/stack.routes";
 
 import { CreateNewMeal, Header, HomeContainer, Icon, Label } from "./styles";
 import { useMeals } from "@hooks/useMeals";
+import { useMealsDetails } from "@hooks/meal";
 
 interface meal {
     date: Date;
@@ -24,7 +25,10 @@ interface meal {
 
 export function Home({navigation:{navigate}}:NativeStackScreenProps<ScreenProps,'Home'>){
     const {meals} = useMeals()
-    
+    const {negativeMeals, posiveMeals} = useMealsDetails()
+
+    console.log(negativeMeals, posiveMeals)
+
     function handleNavigateToNewMealScreen(){
         navigate('NewMeal')
     }
