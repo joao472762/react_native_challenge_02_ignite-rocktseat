@@ -2,28 +2,29 @@
 import { MealProps } from "@context/MealsContext"
 import { useMeals } from "./useMeals"
 
+
+
 export function useMealsDetails(){
     
     const  {meals} = useMeals()
+    const negativeMeals = meals.filter(meal => !meal.isInDiet)
+
+    const posiveMeals = meals.filter(meal => meal.isInDiet)
+    const positiveMealsPercentage = (posiveMeals.length * 100) / meals.length 
+    const positiveMealsPecentageFormated = (  
+        String(positiveMealsPercentage) === 'NaN' ? '0' : positiveMealsPercentage.toFixed(2)
+    )
     
-    
-    const mealsStatus = meals.reduce((acc, state) => {
-        if(state.isInDiet){
-            acc.posiveMeals.push(state)
-        }
-        else {
-            acc.negativeMeals.push(state)
-        }
-        return acc
-    },{posiveMeals: <MealProps[]>[], negativeMeals:  <MealProps[]>[]})
-    
-    const {negativeMeals,posiveMeals} = mealsStatus
+    const positiveMealSumary = {
+        porcentage: positiveMealsPecentageFormated ?? 0,
+        hasMorePositiveMealsThanNegative: positiveMealsPercentage >= 50 
+    }
 
     
-    
     return {
-        negativeMeals,
         posiveMeals,
+        positiveMealSumary,
+        negativeMeals
     }
 
 }

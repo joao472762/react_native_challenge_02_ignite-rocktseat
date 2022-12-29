@@ -6,7 +6,7 @@ import { CardContainer, CardStyledProps } from "./styles";
 interface CardProps  {
     type?: CardStyledProps['type'],
     isPositive?: CardStyledProps['isPositive'],
-    title: string,
+    title: string | number,
     subtitle: string,
 }
 export function Card({isPositive=true,type='primary',title,subtitle}: CardProps) {

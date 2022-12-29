@@ -7,9 +7,14 @@ import { Header } from "./components/Header";
 import { ScreenProps } from "@routes/stack.routes";
 
 import { Footer, StatisticsContainer, StatisticsContent} from "./styles";
+import { useMealsDetails } from "@hooks/useMealDetails";
+import { useMeals } from "@hooks/useMeals";
 
 
 export function Statistics({navigation,route}:NativeStackScreenProps<ScreenProps, 'Statistics'>){
+    const {posiveMeals,negativeMeals,positiveMealSumary} = useMealsDetails()
+    const {meals, positiveMealsSequence} = useMeals()
+
     function handleNavigatToHomeScreen(){
         navigation.navigate('Home')
     }
@@ -18,7 +23,7 @@ export function Statistics({navigation,route}:NativeStackScreenProps<ScreenProps
         <StatisticsContainer>
             <Header 
                 isPossive 
-                percentage='98'
+                percentage={positiveMealSumary.porcentage}
                 onNavigate={handleNavigatToHomeScreen} 
             />
 
@@ -26,12 +31,12 @@ export function Statistics({navigation,route}:NativeStackScreenProps<ScreenProps
                 <Text weight="Bold" style={{marginBottom: 12}}>Estatísticas gerais</Text>
 
                 <Card
-                    title="22"
+                    title={positiveMealsSequence}
                     subtitle="melhor sequência de pratos dentro da dieta"
                 />
 
                 <Card 
-                   title="22"
+                   title={meals.length}
                     subtitle="refeições registradas"
                 /> 
 
@@ -39,14 +44,14 @@ export function Statistics({navigation,route}:NativeStackScreenProps<ScreenProps
                     <Card
                        
                         type="secundary"
-                        title="22"
+                        title={posiveMeals.length}
                         subtitle={`refeições dentro da \n dieta`}
                     />
 
                     <Card
                         type="secundary"
                         isPositive={false}
-                        title="22"
+                        title={negativeMeals.length}
                         subtitle={`refeições fora da \n  dieta`}
                     />
 

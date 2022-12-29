@@ -14,7 +14,7 @@ import { ScreenProps } from "@routes/stack.routes";
 
 import { CreateNewMeal, Header, HomeContainer, Icon, Label } from "./styles";
 import { useMeals } from "@hooks/useMeals";
-import { useMealsDetails } from "@hooks/meal";
+import { useMealsDetails } from "@hooks/useMealDetails";
 
 interface meal {
     date: Date;
@@ -25,9 +25,10 @@ interface meal {
 
 export function Home({navigation:{navigate}}:NativeStackScreenProps<ScreenProps,'Home'>){
     const {meals} = useMeals()
-    const {negativeMeals, posiveMeals} = useMealsDetails()
+    const { posiveMeals,positiveMealSumary} = useMealsDetails()
+    const {hasMorePositiveMealsThanNegative,porcentage} = positiveMealSumary
 
-    console.log(negativeMeals, posiveMeals)
+    console.log( posiveMeals)
 
     function handleNavigateToNewMealScreen(){
         navigate('NewMeal')
@@ -50,8 +51,8 @@ export function Home({navigation:{navigate}}:NativeStackScreenProps<ScreenProps,
             </Header>
 
             <Sumary  
-                isPossive 
-                percentage="80"
+                isPossive={hasMorePositiveMealsThanNegative}
+                percentage={porcentage}
                 onPress={handleNavigateToStatisticsScreen}
             />
 
