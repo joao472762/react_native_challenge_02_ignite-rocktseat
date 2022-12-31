@@ -1,6 +1,10 @@
 import { Text } from "@components/Text";
 import styled from "styled-components/native";
 
+export const MealsContainer = styled.View`
+    margin-bottom: 24px;
+`
+
 export const CardContainer = styled.TouchableOpacity`
     flex-direction: row;
     align-items: center;
@@ -12,6 +16,8 @@ export const CardContainer = styled.TouchableOpacity`
 
     padding: 14px 16px;
     padding-left: 12px;
+
+    margin-top: 8px;
 
     background-color: ${({theme:{colors}}) => colors.gray[100]};
 `

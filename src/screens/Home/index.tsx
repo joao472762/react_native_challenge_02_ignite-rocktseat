@@ -1,34 +1,23 @@
-import { Image} from "react-native";
+import { FlatList, Image} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
+import uuid from 'react-native-uuid'
 import LogoImage from '@assets/Logo.png';
 
-import { Card } from "./components/Card";
+import { Meals } from "./components/Meals";
 import { Avatar } from "@components/Avatar";
 import { Sumary } from "./components/Sumary";
-import { Heading } from "@components/Heading";
 import { Button } from "../../components/Button";
 
 
 import { ScreenProps } from "@routes/stack.routes";
 
 import { CreateNewMeal, Header, HomeContainer, Icon, Label } from "./styles";
-import { useMeals } from "@hooks/useMeals";
 import { useMealsDetails } from "@hooks/useMealDetails";
 
-interface meal {
-    date: Date;
-    name: string;
-    description: string;
-    hasInDiet: boolean;
-}
-
 export function Home({navigation:{navigate}}:NativeStackScreenProps<ScreenProps,'Home'>){
-    const {meals} = useMeals()
-    const { posiveMeals,positiveMealSumary} = useMealsDetails()
-    const {hasMorePositiveMealsThanNegative,porcentage} = positiveMealSumary
 
-    console.log( posiveMeals)
+    const { positiveMealSumary,mealsDateWithoutRepetition} = useMealsDetails()
+    const {hasMorePositiveMealsThanNegative,porcentage} = positiveMealSumary
 
     function handleNavigateToNewMealScreen(){
         navigate('NewMeal')
@@ -38,10 +27,9 @@ export function Home({navigation:{navigate}}:NativeStackScreenProps<ScreenProps,
         navigate('Statistics')
     }
 
-    function handleNavigateToMealScreen(id: string){
+    function navigateToMealScreen(id: string){
         navigate('Meal',{id})
     }
-
 
     return (
         <HomeContainer>
@@ -68,15 +56,17 @@ export function Home({navigation:{navigate}}:NativeStackScreenProps<ScreenProps,
 
             </CreateNewMeal>
 
-            <Heading size="lg">
-                12.08.22
-            </Heading>
+            
+            <FlatList
+                data={mealsDateWithoutRepetition}
+                keyExtractor={item => uuid.v4() as string}
+                renderItem={({item}) => (
+                        <Meals
+                            navigateToMealScreen={navigateToMealScreen}
+                            date={item}
+                        />
 
-            <Card
-                onPress={() => handleNavigateToMealScreen('hu')}
-                hours="20:00"
-                isInDiet
-                name="X-tudo"
+                )}
             />
             
         </HomeContainer>
