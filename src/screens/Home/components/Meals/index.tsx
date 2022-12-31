@@ -1,10 +1,10 @@
+import { format } from 'date-fns';
 import {FlatList, TouchableOpacityProps} from 'react-native'
+
 import { Text } from '@components/Text';
-
-import { CardContainer, DietIdicator, MealsContainer, Title } from './styles';
-import { Heading } from '@components/Heading';
 import { useMeals } from '@hooks/useMeals';
-
+import { Heading } from '@components/Heading';
+import { CardContainer, DietIdicator, MealsContainer, Title } from './styles';
 
 interface MealsProps extends TouchableOpacityProps{
     date: Date,
@@ -16,7 +16,11 @@ export function Meals({date,navigateToMealScreen}: MealsProps){
     const {meals} = useMeals()
 
     const mealsByMouthSelected = meals.filter(meal => {
-        if(meal.date.getMonth() === date.getMonth()){
+        if(
+            meal.date.getDate() === date.getDate() &&
+            meal.date.getMonth() === date.getMonth() &&
+            meal.date.getFullYear() === date.getFullYear()
+        ){
             return meal
         }
     })
@@ -25,11 +29,18 @@ export function Meals({date,navigateToMealScreen}: MealsProps){
         navigateToMealScreen(id)
     }
 
+    const dateFormated = format(date, "d'.'M'.'y")
+
+    function formatDateTime(time: Date){
+       const dateTimeFormated =  format(time, 'p').replace(/[a-z]/gi,'')
+
+       return dateTimeFormated
+    }
 
     return ( 
         <MealsContainer>
 
-            <Heading size='lg'>{date.toDateString()}</Heading>
+            <Heading size='lg'>{dateFormated}</Heading>
 
             <FlatList 
                 data={mealsByMouthSelected}
@@ -40,7 +51,7 @@ export function Meals({date,navigateToMealScreen}: MealsProps){
                     <CardContainer 
                         onPress={() => handleNavigateToMealScreen(item.id)}
                     >
-                        <Text weight='Bold' size='xs' type='secundary'> {item.date.getHours()} </Text>
+                        <Text weight='Bold' size='xs' type='secundary'> {formatDateTime(item.date)} </Text>
                         <Title>{item.name}</Title>
                         <DietIdicator isInDiet = {item.isInDiet}/>
                     </CardContainer>

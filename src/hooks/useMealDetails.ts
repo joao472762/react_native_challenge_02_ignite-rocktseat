@@ -22,22 +22,17 @@ export function useMealsDetails(){
 
     let mealsDateWithoutRepetition = <Date[]>[]
 
-
     for(let cureent of mealsByDate){
-        if(mealsDateWithoutRepetition.length === 0){
-            mealsDateWithoutRepetition.push(cureent)
-        }
-       
+
         let dateAlreadyExist = false
         let dateIndex = 0
 
-     
-
         while ( mealsDateWithoutRepetition.length > dateIndex) {
-            console.log(dateIndex)
+            
             if(
                 cureent.getMonth() === mealsDateWithoutRepetition[dateIndex].getMonth() &&
-                cureent.getDate() === mealsDateWithoutRepetition[dateIndex].getDate()
+                cureent.getDate() === mealsDateWithoutRepetition[dateIndex].getDate() &&
+                cureent.getFullYear() === mealsDateWithoutRepetition[dateIndex].getFullYear()
             ){
                 dateAlreadyExist = true
                 dateIndex = dateIndex + 1
@@ -52,12 +47,10 @@ export function useMealsDetails(){
 
     }
 
-    
     return {
-        mealsByDate,
         posiveMeals,
-        positiveMealSumary,
         negativeMeals,
+        positiveMealSumary,
         mealsDateWithoutRepetition
     }
 
