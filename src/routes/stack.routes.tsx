@@ -4,11 +4,15 @@ import { NewMeal } from "@screens/NewMeal";
 import { Farewell } from "@screens/Farewell";
 import { Statistics } from "@screens/Statistics";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { EditMeal } from "@screens/EditMeal";
 
 export type ScreenProps = {
     Home: undefined,
     NewMeal: undefined,
     Statistics: undefined,
+    EditMeal: {
+        id: string,
+    },
     Meal: {
         id: string
     }
@@ -26,6 +30,7 @@ export function StackRoutes(){
             <Screen name="Meal" component={Meal} />
             <Screen name="NewMeal" component={NewMeal} />
             <Screen name="Farewell" component={Farewell} />
+            <Screen name="EditMeal" component={EditMeal} />
             <Screen name="Statistics" component={Statistics} />
         </Navigator>
 

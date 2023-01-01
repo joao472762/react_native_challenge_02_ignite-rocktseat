@@ -1,9 +1,9 @@
 import {  z } from "zod";
 import { useState } from "react";
-import uuid from 'react-native-uuid';
-import { Alert, Keyboard, TouchableWithoutFeedback} from "react-native";
+import { format } from "date-fns";
 import {  useForm } from "react-hook-form";
 import  { zodResolver } from '@hookform/resolvers/zod';
+import { Alert, Keyboard, TouchableWithoutFeedback} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { Text } from "@components/Text";
@@ -11,22 +11,17 @@ import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { Input } from "@components/Form/Input";
 import { DateInput } from "@components/Form/DateInput";
-import { CardSelector } from "../../components/CardSelector";
+import { CardSelector } from "@components/CardSelector";
 
-import { 
-    DateFitelds,
-    NewMealContainer, 
-    NewMealForm,
-    Footer,
-    DietSelector,
- 
-} from "./styles";
-
-import { ScreenProps } from "@routes/stack.routes";
-import { dateRegex } from "@utils/regex/date";
-import { timeRegex } from "@utils/regex/time";
 import { useMeals } from "@hooks/useMeals";
+import { ScreenProps } from "@routes/stack.routes";
 import { MealProps } from "@context/MealsContext";
+
+import { timeRegex } from "@utils/regex/time";
+import { dateRegex } from "@utils/regex/date";
+
+import { DateFitelds, DietSelector, EditMealContainer, EditMealForm, Footer } from "./styles";
+
 
 const newMealFormSchema = z.object({
     name: z.string().min(1,'nome não pode ficar vazio'),
@@ -42,26 +37,35 @@ const newMealFormSchema = z.object({
 export type newMealFormSchemaData = z.infer<typeof newMealFormSchema>
 export type newMealFormSchemaType = 'name' | 'description' | 'date' | 'time' 
 
-export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal'>){
+
+export function EditMeal({navigation,route}:NativeStackScreenProps<ScreenProps,'EditMeal'>){
+    const {meals} = useMeals()
     const [isInDiet, setIsInDiet] = useState<boolean | undefined>(undefined)
-    const {addNewMeal} = useMeals()
+    const {updateOneMeal} = useMeals()
+
+    const {id} = route.params
+
+    const meal = meals.find(Meal => Meal.id === id)
+    const mealConfirmed = meal ? meal : {} as MealProps
+
+    const calendar = format(mealConfirmed.date,"d'/'M'/'y")
+    const dateTime = format(mealConfirmed.date , 'p').replace(/[a-z]/gi,'')
 
     const {control,handleSubmit,reset,formState:{errors}} = useForm<newMealFormSchemaData>({
-        resolver: zodResolver(newMealFormSchema)
-    })
-
-    function navigateToFarewellScreen(){
-        if(typeof(isInDiet) === 'boolean'){
-            navigation.navigate('Farewell',{isInDiet: isInDiet })
+        resolver: zodResolver(newMealFormSchema),
+        defaultValues: {
+            name: mealConfirmed.name,
+            description: mealConfirmed.description,
+            date: calendar
         }
-
-    }
+        
+    })
 
     function navigateToHomeScreen(){
         navigation.navigate('Home')
     }
 
-    function createNewMeal(data:newMealFormSchemaData ){
+    function editNewMeal(data:newMealFormSchemaData ){
 
         if(isInDiet === undefined){
             return Alert.alert('Está na dieta?','A refeição está na sua dieta?')
@@ -73,38 +77,37 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
 
         const dateFormatd  = new Date(year,mounth,day,hours, minutes)
 
-        const newMeal:MealProps = {
-            id:uuid.v4() as string,
+        const mealUpdated:MealProps = {
+            id: id,
             name,
             description,
             date: dateFormatd,
             isInDiet: isInDiet as boolean,
         }
 
-        addNewMeal(newMeal)
+        updateOneMeal(id,mealUpdated)
         
         reset()
-        navigateToFarewellScreen()
+        navigateToHomeScreen()
     }
 
     function handleChangeDietState(dietState: boolean){
         setIsInDiet(dietState)
     }
-
-    return  (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <NewMealContainer>
+    return (
+        <EditMealContainer>
                 <Header
                     onNavigate={navigateToHomeScreen}
-                    title="Nova refeição"
+                    title="Editar refeição"
                 />
-                <NewMealForm>
+                <EditMealForm>
 
                     <Input
                         error={errors.name && errors.name.message}
                         label="Nome"
                         control={control}
                         name="name"
+                        defaultValue={mealConfirmed.name}
                         placeholder="Nome"
                     />
 
@@ -114,6 +117,7 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
                         error={errors.description && errors.description.message}
                         control={control}
                         name="description"
+                        defaultValue={mealConfirmed.description}
                         placeholder="Descrição"
                     />
     
@@ -123,6 +127,7 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
                             label="Data"
                             control={control}
                             placeholder= '01/01/2022'
+                            defaultValue={calendar}
                             error={errors.date && errors.date.message}
                             type="datetime"
                             options={{
@@ -133,6 +138,7 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
                         <DateInput
                             name="time"
                             label="Hora"
+                            defaultValue={dateTime}
                             control={control}
                             placeholder= '18:00'
                             error={errors.time  && errors.time.message}
@@ -162,7 +168,6 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
 
                             <CardSelector
                                 onPress={() => handleChangeDietState(false)}
-
                                 type={'negative'}
                                 isSelected={ isInDiet === false}
                                 title='não'
@@ -173,12 +178,11 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
 
                     <Button
                         style={{marginTop: 'auto'}}
-                        onPress={handleSubmit(createNewMeal)}
-                        title="Cadastrar refeição"
+                        onPress={handleSubmit(editNewMeal)}
+                        title="Salvar alterações"
                     />
 
-                </NewMealForm>
-            </NewMealContainer>
-        </TouchableWithoutFeedback>
+                </EditMealForm>
+        </EditMealContainer>
     )
 }

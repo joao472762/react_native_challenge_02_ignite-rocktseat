@@ -20,6 +20,7 @@ import { MealContainer,MealContent,DietStatus,DietIndicator,Footer} from "./styl
 export function Meal({navigation,route}:NativeStackScreenProps<ScreenProps,'Meal'>) {
     const {meals} = useMeals()
     const [modalState, setModalState] = useState(false)
+    const {id} = route.params
 
     function showModal(){
         setModalState(true)
@@ -29,36 +30,37 @@ export function Meal({navigation,route}:NativeStackScreenProps<ScreenProps,'Meal
     function closeModal(){
         setModalState(false)
     }
-
-    const  isInDiet = true;
-    const {id} = route.params
-
-    const meal = meals.find(Meal => Meal.id === id)
-
-
-    const headerType: HeaderType = isInDiet ? 'positive' : 'negative'
-    const {colors} = useTheme()
-
+    
     function navigateToHomeScreen(){
         navigation.navigate('Home')
     }
-    const meealConfirmed = meal ? meal : {} as MealProps
 
-    const calendar = format(meealConfirmed?.date,"d'/'M'/'y")
-    const dateTime = format(meealConfirmed?.date , 'p').replace(/[a-z]/gi,'')
+    function navigetToEditMealScreen(){
+        navigation.navigate('EditMeal',{id: id})
+    }
+
+    const meal = meals.find(Meal => Meal.id === id)
+
+    const mealConfirmed = meal ? meal : {} as MealProps
+
+    const headerType: HeaderType = mealConfirmed.isInDiet ? 'positive' : 'negative'
+    const {colors} = useTheme()
+
+    const calendar = format(mealConfirmed?.date,"d'/'M'/'y")
+    const dateTime = format(mealConfirmed?.date , 'p').replace(/[a-z]/gi,'')
 
 
     return (
-        <MealContainer isInDiet={isInDiet}>
+        <MealContainer isInDiet={mealConfirmed.isInDiet}>
             <Header 
                 title="Refeição" 
-                type={meal?.isInDiet ? 'positive' : 'negative'} 
+                type={headerType} 
                 onNavigate={navigateToHomeScreen}
             />
             <MealContent>
                 <Heading  size="2lg">{meal?.name}</Heading>
                 <Text type="secundary" style={{textAlign: 'left',marginTop:4}}>
-                    {meealConfirmed.description}
+                    {mealConfirmed.description}
                 </Text>
 
                 <Text weight="Bold"  style={{marginTop: 24}}>Data e hora</Text>
@@ -66,15 +68,15 @@ export function Meal({navigation,route}:NativeStackScreenProps<ScreenProps,'Meal
 
 
                 <DietStatus>
-                    <DietIndicator isInDiet={meealConfirmed.isInDiet}/>
+                    <DietIndicator isInDiet={mealConfirmed.isInDiet}/>
                     <Text>
-                        {meealConfirmed.isInDiet ? 'dentro da dieta' : 'fora da dieta'}
+                        {mealConfirmed.isInDiet ? 'dentro da dieta' : 'fora da dieta'}
                     </Text>
                 </DietStatus>
 
                 <Footer>
                     <Button
-                       
+                       onPress={navigetToEditMealScreen}
                         Icon={<PencilSimpleLine color={colors.white} size={18} />}
                         title="Editar refeição"
                     />
@@ -93,7 +95,7 @@ export function Meal({navigation,route}:NativeStackScreenProps<ScreenProps,'Meal
                 
                 visible={modalState}
                 closeModal={closeModal}
-                mealId = {meealConfirmed.id}
+                mealId = {mealConfirmed.id}
             />
         </MealContainer>
     )

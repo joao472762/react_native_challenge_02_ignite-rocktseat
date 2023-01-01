@@ -16,7 +16,8 @@ interface MealsContextType {
     meals: MealProps[]
     addNewMeal: (newMeal: MealProps) => void
     deleteOneMeal: (id: string) => void
-    positiveMealsSequence: number
+    positiveMealsSequence: number,
+    updateOneMeal: (id: string, mealUpdated: MealProps) => void
 }
 
 export const MealsContext = createContext({} as MealsContextType)
@@ -38,11 +39,22 @@ export function MealsProvier({children}: MealsProvierProps) {
         setMeals(mealsWithoutOneMeal)
     }
 
+    function updateOneMeal(id: string, mealUpdated: MealProps){
+        const mealWithOneMealUpdated = meals.map(meal => {
+            if(meal.id === id){
+                return mealUpdated
+            }
+            return meal
+        })
+        setMeals(mealWithOneMealUpdated)
+    }
+
     return (
         <MealsContext.Provider value={{
             meals,
             addNewMeal,
             deleteOneMeal,
+            updateOneMeal,
             positiveMealsSequence}}
         >
             {children}

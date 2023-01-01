@@ -35,7 +35,7 @@ export function DateInput({control,name,label,error,style,inputType='secondary',
                     value={value}
                     {...rest}
                 />
-                {error && <InputComponent.Error error={error}  />}
+                {error && <InputComponent.Error error={error.replace(/required/gi,'Requerido')}  />}
             </InputComponent.Root>
             
         )}

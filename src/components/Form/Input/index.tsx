@@ -41,7 +41,9 @@ export function Input({control,name,label,error,style,type='primary',...rest}: I
                     value={value}
                     {...rest}
                 />
-                {error && <InputComponent.Error error={error}  />}
+                {
+                error && 
+                    <InputComponent.Error error={error.replace(/required/gi,'Requerido')}  />}
             </InputComponent.Root>
             
         )}
