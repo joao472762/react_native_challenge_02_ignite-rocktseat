@@ -24,7 +24,8 @@ export const defaultTheme = <const> {
 
         },
 
-        white: '#fff'
+        white: '#fff',
+        overlay: '#0002'
     },
 
     fonts: {
