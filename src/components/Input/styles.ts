@@ -11,7 +11,7 @@ export const InputRootContainer = styled.View`
 export const InputInputContainer = styled.TextInput`
     ${({theme:{colors,fonts}}) => css`
      
-        height: 48px;
+        min-height: 48px;
         width: 100%;
 
         border-width: 1px;

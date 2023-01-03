@@ -32,7 +32,7 @@ export function Input({control,name,label,error,style,type='primary',...rest}: I
                     onBlur={onBlur}
                     style={[
                         type === 'secundary' && {
-                            height:120,
+                            minHeight:120,
                     
                         }
                     ]}

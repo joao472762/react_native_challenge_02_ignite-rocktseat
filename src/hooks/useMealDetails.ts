@@ -13,7 +13,7 @@ export function useMealsDetails(){
     
     const positiveMealSumary = {
         porcentage: positiveMealsPecentageFormated ?? 0,
-        hasMorePositiveMealsThanNegative: positiveMealsPercentage >= 50 
+        hasMorePositiveMealsThanNegative: positiveMealsPercentage >= 50 || positiveMealsPecentageFormated === '0'
     }
 
     const mealsByDate = meals.map(meal => {

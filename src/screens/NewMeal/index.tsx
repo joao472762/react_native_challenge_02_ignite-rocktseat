@@ -105,12 +105,16 @@ export function NewMeal({navigation}:NativeStackScreenProps<ScreenProps,'NewMeal
                         label="Nome"
                         control={control}
                         name="name"
-                        placeholder="Nome"
+                        textAlignVertical="center"
+                        placeholder="Nome da Refeição"
+                      
                     />
 
                     <Input
                         type="secundary"
                         label="Descrição"
+                        multiline
+                        
                         error={errors.description && errors.description.message}
                         control={control}
                         name="description"

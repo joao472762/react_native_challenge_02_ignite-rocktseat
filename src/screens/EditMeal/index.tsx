@@ -56,7 +56,6 @@ export function EditMeal({navigation,route}:NativeStackScreenProps<ScreenProps,'
         defaultValues: {
             name: mealConfirmed.name,
             description: mealConfirmed.description,
-            date: calendar
         }
         
     })
@@ -114,6 +113,7 @@ export function EditMeal({navigation,route}:NativeStackScreenProps<ScreenProps,'
                     <Input
                         type="secundary"
                         label="Descrição"
+                        multiline
                         error={errors.description && errors.description.message}
                         control={control}
                         name="description"

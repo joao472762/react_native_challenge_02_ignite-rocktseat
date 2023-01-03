@@ -16,9 +16,12 @@ import { useMealsDetails } from "@hooks/useMealDetails";
 
 export function Home({navigation:{navigate}}:NativeStackScreenProps<ScreenProps,'Home'>){
 
-    const { positiveMealSumary,mealsDateWithoutRepetition} = useMealsDetails()
-    const {hasMorePositiveMealsThanNegative,porcentage} = positiveMealSumary
+    const { positiveMealSumary,mealsDateWithoutRepetition,negativeMeals,posiveMeals} = useMealsDetails()
+    const {hasMorePositiveMealsThanNegative} = positiveMealSumary
 
+    const hasOnlyNegativeMeals = posiveMeals.length === 0   && negativeMeals.length > 0
+    const pectentage = hasOnlyNegativeMeals ? '100' : positiveMealSumary.porcentage
+   
     function handleNavigateToNewMealScreen(){
         navigate('NewMeal')
     }
@@ -40,7 +43,7 @@ export function Home({navigation:{navigate}}:NativeStackScreenProps<ScreenProps,
 
             <Sumary  
                 isPossive={hasMorePositiveMealsThanNegative}
-                percentage={porcentage}
+                percentage={pectentage}
                 onPress={handleNavigateToStatisticsScreen}
             />
 

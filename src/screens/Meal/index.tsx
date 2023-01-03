@@ -46,7 +46,7 @@ export function Meal({navigation,route}:NativeStackScreenProps<ScreenProps,'Meal
     const headerType: HeaderType = mealConfirmed.isInDiet ? 'positive' : 'negative'
     const {colors} = useTheme()
 
-    const calendar = format(mealConfirmed?.date,"d'/'M'/'y")
+    const calendar = format(mealConfirmed?.date,"dd'/'MM'/'y")
     const dateTime = format(mealConfirmed?.date , 'p').replace(/[a-z]/gi,'')
 
 
