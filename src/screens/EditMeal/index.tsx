@@ -46,7 +46,10 @@ export function EditMeal({navigation,route}:NativeStackScreenProps<ScreenProps,'
     const {id} = route.params
 
     const meal = meals.find(Meal => Meal.id === id)
-    const mealConfirmed = meal ? meal : {} as MealProps
+    const mealConfirmed = {
+        ...meal,
+        date: meal?.date && new Date(meal.date)
+    } as MealProps
 
     const calendar = format(mealConfirmed.date,"d'/'M'/'y")
     const dateTime = format(mealConfirmed.date , 'p').replace(/[a-z]/gi,'')
@@ -94,95 +97,98 @@ export function EditMeal({navigation,route}:NativeStackScreenProps<ScreenProps,'
         setIsInDiet(dietState)
     }
     return (
-        <EditMealContainer>
-                <Header
-                    onNavigate={navigateToHomeScreen}
-                    title="Editar refeição"
-                />
-                <EditMealForm>
-
-                    <Input
-                        error={errors.name && errors.name.message}
-                        label="Nome"
-                        control={control}
-                        name="name"
-                        defaultValue={mealConfirmed.name}
-                        placeholder="Nome"
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
+            <EditMealContainer>
+                    <Header
+                        onNavigate={navigateToHomeScreen}
+                        title="Editar refeição"
                     />
+                    <EditMealForm>
 
-                    <Input
-                        type="secundary"
-                        label="Descrição"
-                        multiline
-                        error={errors.description && errors.description.message}
-                        control={control}
-                        name="description"
-                        defaultValue={mealConfirmed.description}
-                        placeholder="Descrição"
-                    />
-    
-                    <DateFitelds>
-                        <DateInput
-                            name="date"
-                            label="Data"
+                        <Input
+                            error={errors.name && errors.name.message}
+                            label="Nome"
                             control={control}
-                            placeholder= '01/01/2022'
-                            defaultValue={calendar}
-                            error={errors.date && errors.date.message}
-                            type="datetime"
-                            options={{
-                                format: 'DD/MM/YYYY'
-                            }}
-
+                            name="name"
+                            defaultValue={mealConfirmed.name}
+                            placeholder="Nome"
                         />
-                        <DateInput
-                            name="time"
-                            label="Hora"
-                            defaultValue={dateTime}
+
+                        <Input
+                            type="secundary"
+                            label="Descrição"
+                            multiline
+                            error={errors.description && errors.description.message}
                             control={control}
-                            placeholder= '18:00'
-                            error={errors.time  && errors.time.message}
-                            type="datetime"
-                            options={{
-                                format: 'HH:mm'
-                            }}
-                        />  
-                    
-                    </DateFitelds>
+                            name="description"
+                            defaultValue={mealConfirmed.description}
+                            placeholder="Descrição"
+                        />
+        
+                        <DateFitelds>
+                            <DateInput
+                                name="date"
+                                label="Data"
+                                control={control}
+                                placeholder= '01/01/2022'
+                                defaultValue={calendar}
+                                error={errors.date && errors.date.message}
+                                type="datetime"
+                                options={{
+                                    format: 'DD/MM/YYYY'
+                                }}
 
-                    <Footer>
-                        <Text 
-                            size="sm" 
-                            type="secundary" 
-                            weight="Bold"
-                        > 
-                            Está dentro da dieta?
-                        </Text>
-                        <DietSelector>
-                            <CardSelector
-                                onPress={() => handleChangeDietState(true)}
-                                type={'positive'}
-                                isSelected={isInDiet === true}
-                                title='sim'
                             />
+                            <DateInput
+                                name="time"
+                                label="Hora"
+                                defaultValue={dateTime}
+                                control={control}
+                                placeholder= '18:00'
+                                error={errors.time  && errors.time.message}
+                                type="datetime"
+                                options={{
+                                    format: 'HH:mm'
+                                }}
+                            />  
+                        
+                        </DateFitelds>
 
-                            <CardSelector
-                                onPress={() => handleChangeDietState(false)}
-                                type={'negative'}
-                                isSelected={ isInDiet === false}
-                                title='não'
-                            />
+                        <Footer>
+                            <Text 
+                                size="sm" 
+                                type="secundary" 
+                                weight="Bold"
+                            > 
+                                Está dentro da dieta?
+                            </Text>
+                            <DietSelector>
+                                <CardSelector
+                                    onPress={() => handleChangeDietState(true)}
+                                    type={'positive'}
+                                    isSelected={isInDiet === true}
+                                    title='sim'
+                                />
 
-                        </DietSelector>
-                    </Footer>
+                                <CardSelector
+                                    onPress={() => handleChangeDietState(false)}
+                                    type={'negative'}
+                                    isSelected={ isInDiet === false}
+                                    title='não'
+                                />
 
-                    <Button
-                        style={{marginTop: 'auto'}}
-                        onPress={handleSubmit(editNewMeal)}
-                        title="Salvar alterações"
-                    />
+                            </DietSelector>
+                        </Footer>
 
-                </EditMealForm>
-        </EditMealContainer>
+                        <Button
+                            style={{marginTop: 'auto'}}
+                            onPress={handleSubmit(editNewMeal)}
+                            title="Salvar alterações"
+                        />
+
+                    </EditMealForm>
+            </EditMealContainer>
+
+        </TouchableWithoutFeedback>
     )
 }

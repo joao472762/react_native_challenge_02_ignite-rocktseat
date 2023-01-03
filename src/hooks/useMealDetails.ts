@@ -24,15 +24,16 @@ export function useMealsDetails(){
 
     for(let cureent of mealsByDate){
 
-        let dateAlreadyExist = false
         let dateIndex = 0
+        let dateAlreadyExist = false
+        const currentInDate = new  Date(cureent)
 
         while ( mealsDateWithoutRepetition.length > dateIndex) {
             
             if(
-                cureent.getMonth() === mealsDateWithoutRepetition[dateIndex].getMonth() &&
-                cureent.getDate() === mealsDateWithoutRepetition[dateIndex].getDate() &&
-                cureent.getFullYear() === mealsDateWithoutRepetition[dateIndex].getFullYear()
+                currentInDate.getMonth() === mealsDateWithoutRepetition[dateIndex].getMonth() &&
+                currentInDate.getDate() === mealsDateWithoutRepetition[dateIndex].getDate() &&
+                currentInDate.getFullYear() === mealsDateWithoutRepetition[dateIndex].getFullYear()
             ){
                 dateAlreadyExist = true
                 dateIndex = dateIndex + 1
@@ -42,7 +43,7 @@ export function useMealsDetails(){
         }
 
         if(dateAlreadyExist === false){
-            mealsDateWithoutRepetition.push(cureent)
+            mealsDateWithoutRepetition.push(currentInDate)
         }
 
     }

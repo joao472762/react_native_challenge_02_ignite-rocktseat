@@ -7,6 +7,7 @@ import { Loader } from '@components/Loader';
 import { defaultTheme } from '@styles/defaultTheme';
 import { StatusBar } from 'react-native';
 import { Router } from '@routes/index';
+import { MealsProvier } from '@context/MealsContext';
 
 export default function App() {
   const [fontLodaded] =  useFonts({
@@ -22,7 +23,9 @@ export default function App() {
           barStyle={'dark-content'}
           backgroundColor= 'transparent'
         />
-        {fontLodaded ? <Router/> :<Loader/>}
+        <MealsProvier>
+          {fontLodaded ? <Router/> :<Loader/>}
+        </MealsProvier>
       </AppContainer>
 
     </ThemeProvider>

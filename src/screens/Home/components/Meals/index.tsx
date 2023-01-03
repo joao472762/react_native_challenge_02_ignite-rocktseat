@@ -12,16 +12,20 @@ interface MealsProps extends TouchableOpacityProps{
 }
 
 export function Meals({date,navigateToMealScreen}: MealsProps){
-
     const {meals} = useMeals()
 
     const mealsByMouthSelected = meals.filter(meal => {
+        const mealDate = new Date(meal.date)
+        
         if(
-            meal.date.getDate() === date.getDate() &&
-            meal.date.getMonth() === date.getMonth() &&
-            meal.date.getFullYear() === date.getFullYear()
+           mealDate.getDate() === date.getDate() &&
+           mealDate.getMonth() === date.getMonth() &&
+           mealDate.getFullYear() === date.getFullYear()
         ){
-            return meal
+            return {
+                ...meal,
+                date: mealDate
+            }
         }
     })
 
@@ -29,7 +33,7 @@ export function Meals({date,navigateToMealScreen}: MealsProps){
         navigateToMealScreen(id)
     }
 
-    const dateFormated = format(date, "d'.'M'.'y")
+    const dateFormated = format(date, "dd'.'MM'.'y")
 
     function formatDateTime(time: Date){
        const dateTimeFormated =  format(time, 'p').replace(/[a-z]/gi,'')
@@ -41,21 +45,20 @@ export function Meals({date,navigateToMealScreen}: MealsProps){
         <MealsContainer>
 
             <Heading size='lg'>{dateFormated}</Heading>
-
             <FlatList 
                 data={mealsByMouthSelected}
                 
                 showsVerticalScrollIndicator={false}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
-                    <CardContainer 
+                    <CardContainer
+                        activeOpacity={.7}
                         onPress={() => handleNavigateToMealScreen(item.id)}
                     >
-                        <Text weight='Bold' size='xs' type='secundary'> {formatDateTime(item.date)} </Text>
+                        <Text weight='Bold' size='xs' type='secundary'> {formatDateTime(new Date(item.date))} </Text>
                         <Title>{item.name}</Title>
                         <DietIdicator isInDiet = {item.isInDiet}/>
                     </CardContainer>
-
                 )}
             />
         </MealsContainer>

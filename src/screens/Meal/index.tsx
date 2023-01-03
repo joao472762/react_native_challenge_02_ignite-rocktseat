@@ -41,7 +41,10 @@ export function Meal({navigation,route}:NativeStackScreenProps<ScreenProps,'Meal
 
     const meal = meals.find(Meal => Meal.id === id)
 
-    const mealConfirmed = meal ? meal : {} as MealProps
+    const mealConfirmed = {
+        ...meal,
+        date: meal?.date && new Date(meal.date)
+    } as MealProps
 
     const headerType: HeaderType = mealConfirmed.isInDiet ? 'positive' : 'negative'
     const {colors} = useTheme()
