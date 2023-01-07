@@ -97,7 +97,7 @@ export function EditMeal({navigation,route}:NativeStackScreenProps<ScreenProps,'
         setIsInDiet(dietState)
     }
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <EditMealContainer>
                     <Header
                         onNavigate={navigateToHomeScreen}
